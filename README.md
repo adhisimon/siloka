@@ -1,5 +1,9 @@
 # SILOKA 
 
+**WORK IN PROGRESS**
+
+This application is still on very early development.
+
 ## Main Goal
 To create an object storage platform that perform Erasure Coding (EC) but with flexibility of adding storage nodes.
 
@@ -28,3 +32,8 @@ Redis will not use for metadata storage because I don't want storage capacity li
 ## Challenges
 - I need to learn rust because I don't have experience on it. Master component need to be write on rust.
 - A lot of S3 API need to be implemented.
+
+## License
+Copyright 2026 Adhidarma Hadiwinoto <adhisimon@tektrans.id>.
+
+This project is licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.

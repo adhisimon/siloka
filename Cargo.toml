@@ -1,6 +1,18 @@
 [package]
 name = "siloka"
-version = "0.1.0"
+version = "0.1.0-alpha.0"
 edition = "2024"
+authors = ["Adhidarma Hadiwinoto <adhisimon@tektrans.id>"]
+description = "Object storage with on the fly erasure coding and easy expansion"
+license = "Apache-2.0"
+repository = "https://github.com/adhisimon/siloka"
+readme = "README.md"
+keywords = ["object-storage", "s3", "erasure-coding", "distributed-systems"]
+categories = ["filesystem", "network-programming"]
+
+[package.metadata.release]
+push = true
+push-tags = true
+sign-commit = true  # Opsional: jika Anda menggunakan GPG sign untuk commit
 
 [dependencies]
