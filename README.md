@@ -31,6 +31,7 @@ Redis will not use for metadata storage because I don't want storage capacity li
 
 ## Challenges
 - I need to learn rust because I don't have experience on it. Master component need to be write on rust.
+  As I'm still learning, contributions are highly welcome! Don't hesitate to open an issue or PR if you spot any non-idiomatic rust code.
 - A lot of S3 API need to be implemented.
 
 ## License
