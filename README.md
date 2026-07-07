@@ -17,8 +17,12 @@ MinIO and RustFS use EC, but they don't allow you to add new storage easily, not
 - Background maintenance and healing.
 
 ## Components
-- master nodes (raft cluster), write using rust
-- storage nodes, write using NodeJS at first, will be porting to rust next.
+- master nodes (raft cluster): write using rust
+- storage nodes: write using NodeJS at first, will be porting to rust next
+- worker nodes: will do computation intensive task like EC encoding/decoding
+- gateway:
+  - s3 gateway
+  - simple http GET/POST/DELETE
 
 ## Metadata
 Metadata stored on a DBMS. First consideration is to use MariaDB. Why MariaDB? Why not PostgreSQL? Because it is so much easier to create MariaDB cluster using MariaDB Galera. There is no easy method to create a PostgreSQL cluster.
