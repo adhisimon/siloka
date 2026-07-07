@@ -42,3 +42,6 @@ Redis will not use for metadata storage because I don't want storage capacity li
 Copyright 2026 Adhidarma Hadiwinoto <adhisimon@tektrans.id>.
 
 This project is licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## Additional Information
+See [doc directory](doc/).
