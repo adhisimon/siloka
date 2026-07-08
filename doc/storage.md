@@ -1,16 +1,16 @@
 # STORAGE COMPONENT
 
 ## Methods
-- GET /blobs: List of existing blobs
-- PUT /blobs/<BLOB_ID>: Upsert a blob
-- GET /blobs/<BLOB_ID>: Get a blob
-- DELETE /blobs/<BLOB_ID>: Delete a blob
+- GET `/blobs`: List of existing blobs
+- PUT `/blobs/<BLOB_ID>`: Upsert a blob
+- GET `/blobs/<BLOB_ID>`: Get a blob
+- DELETE `/blobs/<BLOB_ID>`: Delete a blob
 
 ## Request Headers
 - Required on all methods:
-  - Authorization: ApiKey <APIKEY>
-- Required on PUT /blobs/<BLOB_ID>
-  - Digest: blake3=<BLAKE3_HASHED_VALUE>
+  - `Authorization: ApiKey <APIKEY>`
+- Required on PUT `/blobs/<BLOB_ID>`
+  - `Digest: blake3=<HASH>`
 
 ## Flow
 ### PUT
