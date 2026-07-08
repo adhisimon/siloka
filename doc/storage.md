@@ -9,7 +9,7 @@
 ## Request Headers
 - Required on all methods:
   - `Authorization: ApiKey <APIKEY>`
-- Required on PUT `/blobs/<BLOB_ID>`
+- Optional on PUT `/blobs/<BLOB_ID>`
   - `Digest: blake3=<HASH>`
 
 ## Flow
@@ -21,10 +21,9 @@
        │
        ├─── (Concurency check)  ───> Multiple ──> HTTP 409 Conflict
        │
-       └─── (Stream process) ──────> Finished ──> BLAKE3 verification from Digest: blake3=xxxx 
-                                                      │
+       └─── (Stream process) ──────> Finished ──> BLAKE3 verification if there is Digest request header 
                                                       ├─── Mismatch ──> HTTP 422 Unprocessable Content
-                                                      └─── Cocok   ──> Atomic Rename ──> HTTP 201 Created
+                                                      └─── Match   ──> Atomic Rename ──> HTTP 201 Created
 ```
 
 ## HTTP status
