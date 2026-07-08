@@ -1,5 +1,6 @@
 use clap::Parser;
 mod master;
+mod storage;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Siloka Object Storage")]
@@ -17,6 +18,10 @@ fn main() {
         "master" => {
             println!("Starting siloka-master...");
             master::run();
+        }
+        "storage" => {
+            println!("Starting siloka-worker...");
+            storage::run();
         }
         _ => {
             eprintln!("Unknown component to run: {}", args.mode);
