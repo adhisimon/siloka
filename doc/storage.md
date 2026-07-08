@@ -7,7 +7,7 @@
 - DELETE `/blobs/<BLOB_ID>`: Delete a blob
 
 ## Request Headers
-- Required on all methods:
+- Required on ANY `/blobs/<BLOB_ID>`:
   - `Authorization: ApiKey <APIKEY>`
 - Optional on PUT `/blobs/<BLOB_ID>`
   - `Digest: blake3=<HASH>`
