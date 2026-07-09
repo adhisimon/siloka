@@ -30,7 +30,9 @@
 Will return http status:
 - 200: Success
 - 201: PUT success
+- 204: Not found (DELETE)
 - 401: Invalid apikey
+- 404: Not found (GET)
 - 409: Conflict (multiple write using same blob id in the same time simultaneously)
 - 422: Checksum mismatch
 - 400: Invalid request
