@@ -22,28 +22,18 @@ const CURRENT_VERSION: &str = "1";
 const VERSION_FILE_NAME: &str = "VERSION";
 
 /// Dumb Storage - Physical storage component for Siloka objects.
-/// Responsible for disk I/O, nested directory management, and version metadata initialization.
 #[derive(Clone)]
 pub struct Storage {
     data_dir: PathBuf,
 }
 
 impl Storage {
-    /// Creates a new Storage instance with an absolute resolved data directory.
     pub fn new<P: AsRef<Path>>(data_dir: P) -> Self {
         Self {
             data_dir: data_dir.as_ref().to_path_buf(),
         }
     }
 
-    /// Performs initial setup of the physical directory structure.
-    /// 
-    /// If the `blobs` directory does not exist, this will:
-    /// 1. Create the `blobs` directory.
-    /// 2. Write a `VERSION` file recording the current layout version ("1").
-    ///
-    /// If the `blobs` directory exists but the version file is missing,
-    /// it defaults to Version 1 to maintain backward compatibility.
     pub fn init(&self) -> io::Result<()> {
         let blobs_dir = self.data_dir.join("blobs");
         let version_file_path = blobs_dir.join(VERSION_FILE_NAME);
@@ -68,16 +58,12 @@ impl Storage {
                 ));
             }
         }
-
         Ok(())
     }
 
-    /// Determines the exact physical file path based on the BLOB_ID.
     pub fn resolve_path(&self, blob_id: &str) -> PathBuf {
         let required_len = NESTING_DEPTH * CHARS_PER_LEVEL;
         let mut padded = blob_id.to_string();
-        
-        // Add padding '_' to the right if blob_id is too short
         while padded.len() < required_len {
             padded.push('_');
         }
@@ -91,7 +77,6 @@ impl Storage {
         final_path.join(blob_id)
     }
 
-    /// Writes raw binary data directly to disk (UPSERT contract).
     pub fn write_raw(&self, blob_id: &str, raw_data: &[u8]) -> io::Result<()> {
         let final_path = self.resolve_path(blob_id);
         if let Some(parent) = final_path.parent() {
@@ -100,12 +85,10 @@ impl Storage {
         fs::write(final_path, raw_data)
     }
 
-    /// Reads raw binary data from disk based on BLOB_ID.
     pub fn read_raw(&self, blob_id: &str) -> io::Result<Vec<u8>> {
         fs::read(self.resolve_path(blob_id))
     }
 
-    /// Deletes a binary file from disk and cleans up empty parent directories.
     pub fn delete_raw(&self, blob_id: &str) -> io::Result<()> {
         let final_path = self.resolve_path(blob_id);
         if final_path.exists() {
@@ -131,13 +114,11 @@ impl Storage {
     }
 }
 
-/// Shared application state for Axum HTTP Router.
 struct AppState {
     storage: Storage,
     apikey: String,
 }
 
-/// Helper function to validate authorization headers.
 fn is_authorized(headers: &HeaderMap, expected_key: &str) -> bool {
     headers
         .get(AUTHORIZATION)
@@ -209,7 +190,6 @@ async fn delete_blob(
     }
 }
 
-/// Starts the HTTP storage server using Tokio and Axum.
 pub async fn start_server(
     data_dir: PathBuf,
     addr: std::net::SocketAddr,
@@ -221,9 +201,9 @@ pub async fn start_server(
     let shared_state = Arc::new(AppState { storage, apikey });
 
     let app = Router::new()
-        .route("/blobs/:id", get(get_blob))
-        .route("/blobs/:id", put(put_blob))
-        .route("/blobs/:id", delete(delete_blob))
+        .route("/blobs/{id}", get(get_blob))
+        .route("/blobs/{id}", put(put_blob))
+        .route("/blobs/{id}", delete(delete_blob))
         .with_state(shared_state);
 
     info!(address = %addr, "Starting Storage Node HTTP server");
